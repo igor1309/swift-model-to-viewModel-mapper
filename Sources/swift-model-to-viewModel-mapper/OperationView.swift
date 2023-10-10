@@ -22,14 +22,23 @@ struct OperationView: View {
             
             ScrollView {
                 
-                ForEach(model.operation.parameters, content: parameterView)
+                VStack(spacing: 32) {
+                    
+                    ForEach(model.operation.parameters, content: parameterView)
+                }
             }
             
             Button(action: model.continueButtonTapped) {
                 
                 Text("Continue")
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
+        .padding(.horizontal)
     }
     
     @ViewBuilder

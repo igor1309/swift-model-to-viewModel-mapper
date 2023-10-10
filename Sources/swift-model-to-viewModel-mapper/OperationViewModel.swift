@@ -43,6 +43,7 @@ final class OperationViewModel: ObservableObject {
             if case .b = $0 { return true }
             return false
         }),
+              // mock blackBoxGet reponse
               let random = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".randomElement()
         else { return }
         

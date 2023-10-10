@@ -24,6 +24,7 @@ struct ParameterAView: View {
                 Text($0.rawValue)
             }
         }
+        .pickerStyle(.segmented)
     }
 }
 

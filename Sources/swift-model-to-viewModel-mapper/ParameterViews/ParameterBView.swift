@@ -10,12 +10,17 @@ import SwiftUI
 struct ParameterBView: View {
     
     let viewModel: ParameterBViewModel
-
+    
     var body: some View {
         
         Button(action: viewModel.action) {
             
             Text(viewModel.parameter.value)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
         }
     }
 }
