@@ -22,11 +22,60 @@ struct OperationView: View {
             
             ScrollView {
                 
+                ForEach(model.operation.parameters, content: parameterView)
             }
             
             Button(action: model.continueButtonTapped) {
                 
                 Text("Continue")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func parameterView(
+        parameter: Operation.Parameter
+    ) -> some View {
+        
+        let mapper = ModelToViewModelMapper(model)
+        
+        switch mapper.map(parameter) {
+        case let .a(viewModelA):
+            ParameterAView(viewModel: viewModelA)
+            
+        case let .b(viewModelB):
+            ParameterBView(viewModel: viewModelB)
+        }
+    }
+}
+
+extension Operation.Parameter: Identifiable {
+    
+    var id: Case {
+        
+        switch self {
+        case .a: return .a
+        case .b: return .b
+        }
+    }
+    
+    enum Case {
+        case a, b
+    }
+}
+
+extension ModelToViewModelMapper {
+    
+    init(_ model: OperationViewModel) {
+        
+        self.action = { event in
+            
+            switch event {
+            case let .parameterA(parameterA):
+                model.updateParameterA(to: parameterA)
+                
+            case .parameterB:
+                model.changeParameterB()
             }
         }
     }
@@ -38,27 +87,4 @@ struct OperationView_Previews: PreviewProvider {
         
         OperationView(model: .preview)
     }
-}
-
-private extension OperationViewModel {
-    
-    convenience init(
-        parameters: [Operation.Parameter] = []
-    ) {
-        self.init(operation: .init(parameters: parameters))
-    }
-    
-    static let preview: OperationViewModel = .init(
-        parameters: .preview
-    )
-}
-
-private extension Array where Element == Operation.Parameter {
-    
-    static let preview: Self = [
-        .a(.init(a: "a")),
-        .b(.init(b: "b")),
-        .c(.init(c: "c")),
-        .d(.init(d: "d")),
-    ]
 }

@@ -7,30 +7,22 @@
 
 struct Operation {
     
+    /// - Note: it would be much better to use something like [IdentifiedArray](https://github.com/pointfreeco/swift-identified-collections#introducing-identified-collections) to simplify access to array elements via ID.
     var parameters: [Parameter]
     
     enum Parameter: Hashable {
         
-        case a(A)
-        case b(B)
-        case c(C)
-        case d(D)
+        case a(ParameterA)
+        case b(ParameterB)
         
-        struct A: Hashable {
+        enum ParameterA: String, CaseIterable {
             
-            let a: String
+            case  a1, a2, a3
         }
-        struct B: Hashable {
+        
+        struct ParameterB: Hashable {
             
-            let b: String
-        }
-        struct C: Hashable {
-            
-            let c: String
-        }
-        struct D: Hashable {
-            
-            let d: String
+            let value: String
         }
     }
 }
